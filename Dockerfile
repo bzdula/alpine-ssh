@@ -1,9 +1,9 @@
 FROM alpine:3.5
-MAINTAINER Arvind Rawat <arvindr226@gmail.com>
-
+#MAINTAINER Arvind Rawat <arvindr226@gmail.com>
+ARG PASSWORD 
 RUN apk --update add --no-cache openssh bash \
   && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
-  && echo "root:root" | chpasswd \
+  && echo "root:${PASSWORD}" | chpasswd \
   && rm -rf /var/cache/apk/*
 RUN sed -ie 's/#Port 22/Port 22/g' /etc/ssh/sshd_config
 RUN sed -ri 's/#HostKey \/etc\/ssh\/ssh_host_key/HostKey \/etc\/ssh\/ssh_host_key/g' /etc/ssh/sshd_config
